@@ -1,0 +1,22 @@
+name: link-package
+on: workflow_dispatch
+jobs:
+  link:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push a tiny probe tag to link the package to this repo
+        run: |
+          docker build -t "ghcr.io/${{ github.repository }}:link-probe" - <<'D'
+          FROM scratch
+          LABEL org.r0b0tlab.probe="link-package"
+          D
+          docker push "ghcr.io/${{ github.repository }}:link-probe"
