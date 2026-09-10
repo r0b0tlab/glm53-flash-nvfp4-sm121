@@ -35,7 +35,7 @@ block-diffusion drafter, thinking at `reasoning_effort=max` throughout.
 | Vision | 8/8 (counting ×4, OCR 4271, bar chart, frame order, frame 3) at max thinking |
 | Deep decode (>24K ctx) | PASS (24,207-token prompt; engine healthy) |
 | DFlash2 spec decode | active — taps verified (`Eagle3 auxiliary layers (6, 15, 25, 34, 43)`); pooled acceptance 37.7%, mean accepted length 2.64 on a mixed workload; **C1 code prompt: AR 15.1 → DFlash2 33.6 tok/s (2.2×)**; prose 14.9 → 17.9 (+20%). Acceptance is workload-dependent: first-slot acceptance (77%) matches the reference, deeper positions decay faster on reasoning-heavy (thinking=max) output. See `evidence/spec/` |
-| Quality lanes | **NIAH PASS 5/5** (window 126,720; 25/50/90 % + multi-key 33/66 at ~120K-token prompts; ~2.5 min/case); Q200v2 / BFCL / vision benchmark — see `evidence/campaign/` |
+| Quality lanes | **NIAH PASS 5/5** (window 126,720; 25/50/90 % + multi-key 33/66 at ~120K-token prompts, ~2.5 min/case); **Q200v2 170/178 transported (95.5 %)**: gsm8k 78/80, humaneval 39/40, ifeval 35/40, hard-reasoning 18/20 (2 transport-excluded at the 8192 ceiling; review also confirmed the model gets (13,8), which the dataset reference itself omits); **BFCL-hard20 14/20 (70.0 %, 0 errors)**. Vision benchmark bounded subsets: in progress at freeze — CV-Bench Count subaxis 67.7 % (ling reference 67.1 %); full lanes run on. See `evidence/` |
 | Perf | see `evidence/perf/` |
 
 ## Operating notes (measured, not assumed)
