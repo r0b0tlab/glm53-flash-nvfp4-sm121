@@ -1,0 +1,113 @@
+{
+ "benchmark": "r0b0bench-vision",
+ "candidate_id": "glm53-dflash2",
+ "contract_sha256": "a921662d37e467c4b5830fb5fddfb3c5da21d5ea3b05128fb228d0c4991eed16",
+ "generated_utc": "2026-09-10T09:16:31Z",
+ "image_id": "sha256:3fceaf69a626569e6063bcaf63277e68b2b954aa099ecf2b5cb782943d446c17",
+ "mean_row_seconds": 22.31,
+ "model": "glm-5.3-flash-nvfp4-sm121",
+ "profile_id": "dflash2-k7-bf16kv-126k-max",
+ "protocol": {
+  "answer_instruction": "Answer with the letter or value only.",
+  "bounded": "first-300 rows per suite (deterministic), thinking=max; NOT the full 4,703-row set",
+  "chat_template_kwargs": {
+   "reasoning_effort": "max"
+  },
+  "derived_from": {
+   "name": "r0b0bench-vision",
+   "total_rows": 4703,
+   "version": "1.0.0"
+  },
+  "image_transport": "base64 data URL (jpeg/png)",
+  "max_tokens": {
+   "cvbench": 1024,
+   "mmvp": 1024,
+   "ocrbench": 2048,
+   "realworldqa": 1024
+  },
+  "temperature": 0.0,
+  "workers_default": 4
+ },
+ "runner_sha256": "8bf470f560d4304a303846f48ad4c854af65b53b73c2bef33d595146d50a1cf2",
+ "schema": "r0b0bench.vision.v1",
+ "suites": {
+  "cvbench": {
+   "accuracy": 0.6647,
+   "correct": 224,
+   "rows": 337,
+   "subaxes": {
+    "Count": {
+     "accuracy": 0.6647,
+     "correct": 224,
+     "n": 337
+    }
+   }
+  },
+  "mmvp": {
+   "accuracy": 0.8733,
+   "correct": 262,
+   "rows": 300,
+   "subaxes": {
+    "paired": {
+     "accuracy": 0.8733,
+     "correct": 262,
+     "n": 300
+    }
+   }
+  },
+  "ocrbench": {
+   "accuracy": 0.9533,
+   "correct": 286,
+   "rows": 300,
+   "subaxes": {
+    "Artistic Text Recognition": {
+     "accuracy": 0.98,
+     "correct": 49,
+     "n": 50
+    },
+    "Digit String Recognition": {
+     "accuracy": 0.9,
+     "correct": 45,
+     "n": 50
+    },
+    "Handwriting Recognition": {
+     "accuracy": 0.88,
+     "correct": 44,
+     "n": 50
+    },
+    "Irregular Text Recognition": {
+     "accuracy": 1.0,
+     "correct": 50,
+     "n": 50
+    },
+    "Non-Semantic Text Recognition": {
+     "accuracy": 0.96,
+     "correct": 48,
+     "n": 50
+    },
+    "Regular Text Recognition": {
+     "accuracy": 1.0,
+     "correct": 50,
+     "n": 50
+    }
+   }
+  },
+  "realworldqa": {
+   "accuracy": 0.8033,
+   "correct": 241,
+   "rows": 300,
+   "subaxes": {
+    "real_world": {
+     "accuracy": 0.8033,
+     "correct": 241,
+     "n": 300
+    }
+   }
+  }
+ },
+ "total": {
+  "accuracy": 0.8189,
+  "correct": 1013,
+  "rows": 1237
+ }
+}

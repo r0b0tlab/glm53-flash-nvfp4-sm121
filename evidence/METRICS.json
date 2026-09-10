@@ -39,10 +39,11 @@
                "e2e_tok_s_mean": 28.74},
     "bfcl_hard20": {"verdict": "SCORED", "correct": 14, "total": 20, "accuracy": 0.7,
                     "errors": 0},
-    "vision_bench": {"status": "IN_PROGRESS_AT_FREEZE",
-                     "note": "r0b0bench-vision-glm53max bounded subsets (300/suite); see vision-bench/",
-                     "budget_tokens": {"cvbench": 1024, "mmvp": 1024,
-                                       "realworldqa": 1024, "ocrbench": 2048}}
+    "vision_bench": {"verdict": "SCORED (bounded)",
+                     "rows": 1237, "correct": 1013, "accuracy": 0.8189,
+                     "suites": {"cvbench": {"accuracy": 0.6647, "note": "Count subaxis only (first-300 bound)"},
+                                "mmvp": 0.8733, "realworldqa": 0.8033, "ocrbench": 0.9533},
+                     "protocol": "r0b0bench-vision-glm53max (thinking=max; budgets 1024/1024/1024/2048); deterministic first-300 per suite of the frozen 4,703-row v1.0.0; ling full-suite reference 80.8 %"}
   },
   "perf": {
     "c1_code_tok_s": {"ar": 15.1, "dflash2": 34.0, "speedup": 2.25},
