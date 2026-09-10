@@ -54,7 +54,8 @@
   },
   "boundaries": [
     "bf16 KV is the maximum: fp8 canonicalizes to a packed uint8 layout the SM90 sparse-MLA backend rejects",
-    "window 126,720 is KV-pool bound (kv_cache_max_concurrency ~1.36x)",
+    "window 126,720; pool 148,808 tokens (1.17x concurrency at the window); ~22.2 KiB/token",
+    "full-context (1M) NIAH does NOT fit 2xGB10: 1M needs ~22.2 GiB/rank KV vs 3.64 GiB available (~6x short; TP=3 impossible, 64 heads / 3); TP=4-class hardware required",
     "thinking cannot be disabled (template always opens <think>)",
     "reasoning is returned in the `reasoning` field",
     "identical-size multi-image batch ordering can be nondeterministic"

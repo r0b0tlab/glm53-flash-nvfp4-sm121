@@ -57,6 +57,13 @@ block-diffusion drafter, thinking at `reasoning_effort=max` throughout.
   server runs `deepseek_r1`; `glm45` is only kept as a historical note.
 - **Memory:** TP=2 at `gpu_memory_utilization=0.86` (free-memory admission drifts by
   ~0.5 GiB across boots on the 121 GiB unified pool; 0.87+ can be rejected).
+- **Window 126,720; a full-context 1M NIAH does NOT fit this pair.** Live budget:
+  3.64 GiB/rank of KV available at gmu 0.86 with the drafter → pool 148,808 tokens
+  (1.17× concurrency at the window), effective cost ~22.2 KiB/token (bf16). A
+  1,048,576-token window needs **~22.2 GiB/rank of KV — ~6× more than available**
+  (even with the drafter dropped and gmu maxed it stays ~4× short). TP=3 is ruled
+  out by arithmetic (64 attention heads don't divide by 3); a 1M ladder needs
+  TP=4-class hardware. The full served-window ladder (126,720) is qualified 5/5.
 - **Swap:** `vm.swappiness=0` with swap enabled on both ranks (UVM stability).
 - **Multi-image batches:** identical-size multi-image ordering can be misread
   nondeterministically; single-image and 2-image requests are exact. Documented as a
