@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<home>/glm53-flash-nvfp4/scripts/run_q200v2_glm53.py", line 133, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "<home>/glm53-flash-nvfp4/scripts/run_q200v2_glm53.py", line 85, in main
+    summary = q.run_quality(
+              ^^^^^^^^^^^^^^
+  File "<home>/qwen38-flash-next-w4a16/q200v2ar-20260829T141533Z-runner/scripts/run_quality_set.py", line 1583, in run_quality
+    raise ValueError("image_id must be a full immutable sha256 image ID")
+ValueError: image_id must be a full immutable sha256 image ID

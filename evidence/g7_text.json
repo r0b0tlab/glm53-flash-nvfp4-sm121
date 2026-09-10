@@ -1,0 +1,27 @@
+{
+ "mul": {
+  "expect": "391",
+  "pass": true,
+  "out": "**391**\n\n(17 \u00d7 23 = 17 \u00d7 20 + 17 \u00d7 3 = 340 + 51 = 391)"
+ },
+ "fib": {
+  "expect": "55",
+  "pass": true,
+  "out": "0 | 0 |\n| 1 | 1 |\n| 2 | 1 |\n| 3 | 2 |\n| 4 | 3 |\n| 5 | 5 |\n| 6 | 8 |\n| 7 | 13 |\n| 8 | 21 |\n| 9 | 34 |\n| 10 | **55** |\n\nEach term is the sum of the two before it: F(10) = F(9) + F(8) = 34 + 21 = **55**."
+ },
+ "json": {
+  "expect": "{\"ok\":true}",
+  "pass": true,
+  "out": "{\"ok\":true}"
+ },
+ "code": {
+  "expect": "[::-1]",
+  "pass": true,
+  "out": "```python\ns[::-1]\n```"
+ },
+ "tool": {
+  "expect": "tool_call get_weather(city=Austin...)",
+  "pass": true,
+  "out": "[{\"id\": \"chatcmpl-tool-8338c04db9abb6e6\", \"type\": \"function\", \"function\": {\"name\": \"get_weather\", \"arguments\": \"{\\\"city\\\": \\\"Austin, Texas\\\"}\"}}]"
+ }
+}

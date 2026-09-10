@@ -1,0 +1,89 @@
+{
+ "name": "r0b0bench-vision-glm53max",
+ "version": "1.0.0",
+ "frozen_utc": "2026-09-09",
+ "description": "GLM-5.3-Flash adaptation of the frozen vision benchmark: thinking cannot be disabled (template always opens <think>), so answers are budgeted generously at reasoning_effort=max; suites/graders/rows unchanged from v1.0.0.",
+ "protocol": {
+  "chat_template_kwargs": {
+   "reasoning_effort": "max"
+  },
+  "temperature": 0.0,
+  "max_tokens": {
+   "cvbench": 1024,
+   "mmvp": 1024,
+   "realworldqa": 1024,
+   "ocrbench": 2048
+  },
+  "image_transport": "base64 data URL (jpeg/png)",
+  "answer_instruction": "Answer with the letter or value only.",
+  "workers_default": 4,
+  "serve_requirement": "max_model_len >= 32768 (image prefill + 64 output)"
+ },
+ "suites": [
+  {
+   "id": "cvbench",
+   "rows": 2638,
+   "hf": "nyu-visionx/CV-Bench",
+   "revision": "bc284db50d036958861cb60cdd7b77612052ce0d",
+   "license": "Apache-2.0",
+   "files": [
+    "test_2d.parquet",
+    "test_3d.parquet"
+   ],
+   "grader": "mc_letter",
+   "subaxis_field": "task",
+   "subaxes": [
+    "Count",
+    "Relation",
+    "Depth",
+    "Distance"
+   ]
+  },
+  {
+   "id": "mmvp",
+   "rows": 300,
+   "hf": "MMVP/MMVP",
+   "revision": "37eafecab8a3940c50c2ade5b36de69dbc99a8cf",
+   "license": "MIT",
+   "files": [
+    "Questions.csv",
+    "MMVP Images/"
+   ],
+   "grader": "mmvp_choice_paired",
+   "pair_size": 2,
+   "note": "150 CLIP-blind pairs / 300 questions; paired metric requires both questions of a pair correct."
+  },
+  {
+   "id": "realworldqa",
+   "rows": 765,
+   "hf": "xai-org/RealworldQA",
+   "revision": "17e7f75e092e47169732462ea3cdfebe911105dd",
+   "license": "CC-BY-ND-4.0",
+   "files": [
+    "data/test-00000-of-00002.parquet",
+    "data/test-00001-of-00002.parquet"
+   ],
+   "grader": "letter_or_normalized_containment"
+  },
+  {
+   "id": "ocrbench",
+   "rows": 1000,
+   "hf": "echo840/OCRBench",
+   "revision": "92a54bd1384387c178d5a07140a2d85e0a3d12e1",
+   "license": "MIT",
+   "files": [
+    "data/test-00000-of-00001.parquet"
+   ],
+   "grader": "ocrbench_official_containment",
+   "subaxis_field": "question_type",
+   "note": "Official rule (Yuliang-Liu/MultimodalOCR OCRBench/example.py): lowercased answer containment in the prediction; HME100k additionally strips spaces. Composite = recognition 300 + scene VQA 200 + doc VQA 200 + KIE 200 + HME 100."
+  }
+ ],
+ "total_rows": 4703,
+ "derived_from": {
+  "name": "r0b0bench-vision",
+  "version": "1.0.0",
+  "frozen_utc": "2026-09-09",
+  "total_rows": 4703
+ }
+}

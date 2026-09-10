@@ -1,0 +1,52 @@
+{
+ "schema": "r0b0tlab.glm53.q200v2.final.v1",
+ "run_id": "glm53-q200v2-20260910T053201Z",
+ "families": {
+  "gsm8k": {
+   "n": 80,
+   "correct": 78,
+   "incorrect": 2,
+   "excluded": 0
+  },
+  "humaneval": {
+   "n": 40,
+   "correct": 39,
+   "incorrect": 1,
+   "excluded": 0
+  },
+  "ifeval": {
+   "n": 40,
+   "correct": 35,
+   "incorrect": 5,
+   "excluded": 0
+  },
+  "hard_reasoning": {
+   "n": 20,
+   "correct": 18,
+   "incorrect": 0,
+   "excluded": 2
+  }
+ },
+ "total": {
+  "rows": 180,
+  "correct": 170,
+  "incorrect": 8,
+  "transport_excluded": 2,
+  "accuracy": 0.9444,
+  "accuracy_transported": 0.9551
+ },
+ "e2e_tok_s": {
+  "aggregate_completion_over_wall": 23.027319267297717,
+  "max": 44.38159082862991,
+  "mean": 28.738616641014865,
+  "min": 5.5383163516681,
+  "n": 180,
+  "sum_completion_tokens": 228314,
+  "sum_elapsed_s": 9914.919
+ },
+ "campaign_wall_seconds": 7096.806167622002,
+ "overlays": {
+  "humaneval": "local subprocess grader (grade_humaneval_local.py)",
+  "hard_reasoning": "manual-evidence-hard20.json (independent review)"
+ }
+}

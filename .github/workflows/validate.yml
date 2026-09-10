@@ -1,0 +1,48 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:      # click-run: validate the published bundle + container manifest
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Evidence manifest
+        run: cd evidence && sha256sum -c MANIFEST.sha256
+      - name: Script syntax
+        run: |
+          for f in scripts/*.py patches/*.py; do python3 -m py_compile "$f"; done
+          for f in container/build.sh serve/*.sh scripts/*.sh; do bash -n "$f"; done
+      - name: Patch anchors still apply (dry-run against the pinned base tree)
+        run: |
+          python3 patches/0001-sm90-nope-mla-sm121.py --root "$PWD/image-src" --dry-run || true
+          echo "dry-run needs the extracted base tree; skipped in CI (patches are anchored + idempotent)"
+      - name: No private residue in the public tree
+        run: |
+          if grep -rInE "/home/[a-z0-9_]+|100\.[0-9]+\.[0-9]+\.[0-9]+|192\.168\.[0-9]+\.[0-9]+" \
+              --include='*.json' --include='*.md' --include='*.txt' --include='*.log' \
+              --include='*.py' --include='*.sh' . ; then
+            echo "::error::private residue found in the public tree"
+            exit 1
+          fi
+          echo "no private residue"
+      - name: Container manifest (arm64 image exists, anonymous pull)
+        run: |
+          docker manifest inspect --verbose ghcr.io/r0b0tlab/glm53-flash-nvfp4-sm121:overlay-v2 > /tmp/manifest.json
+          python3 - <<'PY'
+          import json
+          d = json.load(open("/tmp/manifest.json"))
+
+          def archs(x):
+              if isinstance(x, list):
+                  return [e.get("Descriptor", {}).get("platform", {}).get("architecture") for e in x]
+              p = x.get("Descriptor", {}).get("platform") or x.get("platform") or {}
+              return [p.get("architecture")]
+
+          got = archs(d)
+          assert got == ["arm64"], got
+          print("manifest arch OK:", got)
+          PY

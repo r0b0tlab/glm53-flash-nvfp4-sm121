@@ -1,0 +1,129 @@
+{
+ "dataset_sha256": "74623ab9b075120cd6f7a93059cc16d8817a6039dd20118b8f0350279f8b1ed6",
+ "method": "independent_manual_review",
+ "reviewer": "r0b0tlab campaign review (independent pass over all 20 hard-reasoning rows)",
+ "rows": [
+  {
+   "content_sha256": "d65beb0c7fa6efb67416d439aa9ae378e536c3177f441b2dbfa0b326c843986f",
+   "id": "hard-01",
+   "passed": true,
+   "rationale": "PASS: E[T] = 13/4 = 3.25 via P(T>k) tail-sum; independent symmetry check agrees. Correct."
+  },
+  {
+   "content_sha256": "ce8ea47dc94ef000536a7462f9a837b07c7bf152d32601aa9ff69317661bcf4e",
+   "id": "hard-00",
+   "passed": true,
+   "rationale": "PASS: n^3-n = (n-1)n(n+1) divisible by 6 proven; generalization 24 | p^3-p for prime p>3 proven (Fermat mod 3 + parity); notes 24 is sharp and primality is essential. Correct."
+  },
+  {
+   "content_sha256": "aabf2635ebbc9c0824410d6471125cb995f6298c5ef19d0198c1fd8eed146944",
+   "id": "hard-03",
+   "passed": true,
+   "rationale": "PASS: sqrt(2) irrationality proof, exactly five sentences, valid. Correct."
+  },
+  {
+   "content_sha256": "d115c9c6d618a743627517d9783a21235ba77354c4725760f2dc46c88b26c195",
+   "id": "hard-02",
+   "passed": true,
+   "rationale": "PASS: all four pairs (53,52),(19,16),(13,8),(11,4) enumerated; parity argument sound. Matches the true solution set (the published reference itself omits (13,8)). Correct."
+  },
+  {
+   "content_sha256": "ec01c30d3ab6253c6f915a5830650ffbe8a9439ca4835ea5088c6d9dd5805d01",
+   "id": "hard-05",
+   "passed": true,
+   "rationale": "PASS: V_{n+1}=V_n-4, V_n=100-4n, empties after exactly 25 hours; continuous-model aside is correct. Correct."
+  },
+  {
+   "content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "id": "hard-04",
+   "passed": false,
+   "rationale": "FAIL (transport): completion hit the 8192-token ceiling (finish_reason=length), content empty; excluded by the frozen fail-closed transport gate, disclosed, not counted as an answer."
+  },
+  {
+   "content_sha256": "cc9109cb1bdd09930aee95ad85b235269235109e341e3a87818cdfba3e49beb4",
+   "id": "hard-07",
+   "passed": true,
+   "rationale": "PASS: 3/10 with correct conditional-probability computation and symmetry sanity check. Correct."
+  },
+  {
+   "content_sha256": "bad7618b8946e3e6b766035f2910d3355b136fe6e8d0f11975ab046ceccdfa67",
+   "id": "hard-06",
+   "passed": true,
+   "rationale": "PASS: ordering by worst-case Theta with correct per-item clauses and the heapify/MAX-HEAPIFY ambiguity flagged. Correct."
+  },
+  {
+   "content_sha256": "464b6847a349169dae68b4ef0823aa674a64bccf56a4ffdb8999a959fe10e101",
+   "id": "hard-09",
+   "passed": true,
+   "rationale": "PASS: 3-state minimal DFA for divisibility by 3 (MSB-first) with transitions and Myhill-Nerode minimality argument. Correct."
+  },
+  {
+   "content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "id": "hard-08",
+   "passed": false,
+   "rationale": "FAIL (transport): completion hit the 8192-token ceiling (finish_reason=length), content empty; excluded by the frozen fail-closed transport gate, disclosed, not counted as an answer."
+  },
+  {
+   "content_sha256": "53f21903ab44f047cd988d76e1bae01a22274d6935bc5811ace6ae15771691a9",
+   "id": "hard-10",
+   "passed": true,
+   "rationale": "PASS: integral = Gamma(3) = 2, integration by parts shown. Correct."
+  },
+  {
+   "content_sha256": "ffd1d1054b1e8fe3dbefd62154259ac855f51ca0104e3507be76e77651524f51",
+   "id": "hard-11",
+   "passed": true,
+   "rationale": "PASS: f'(1) = 1 for right-associative x^x^x, log-differentiation + Taylor cross-check. Correct."
+  },
+  {
+   "content_sha256": "acc5c8cf90ae0044c621463e4d375b1857fa43011cb5d71a1402729d4eba1aa0",
+   "id": "hard-13",
+   "passed": true,
+   "rationale": "PASS: ants meet after 2/3 (path length 2/3), gap-closing rate argument plus radial cross-check. Correct."
+  },
+  {
+   "content_sha256": "5b116cb1c8951ffe348d7f8620fd481ba3a9af5f9c56cfd64d572932d458b9d2",
+   "id": "hard-12",
+   "passed": true,
+   "rationale": "PASS: min-degree>=2 implies a cycle via longest-path proof; tightness and the infinite-graph caveat correct. Correct."
+  },
+  {
+   "content_sha256": "6f49f7b2b47c836a7b3ef25d57f8a5e8034065405e5872f77687df23e768f5eb",
+   "id": "hard-15",
+   "passed": true,
+   "rationale": "PASS: alternating binomial sum = 0 for n=17 (and every n>=1). Correct."
+  },
+  {
+   "content_sha256": "ca4a688953efdafe9dca1af95354d33b6557f420a91af0d8443471910a2d33a8",
+   "id": "hard-14",
+   "passed": true,
+   "rationale": "PASS: 256 self-dual boolean functions of 4 variables (2^8), counting via complementary pairs. Correct."
+  },
+  {
+   "content_sha256": "9d10abc9ca7f1933f11b35f39ab9277b42ee12d26bdf39f608beabfecc254a00",
+   "id": "hard-16",
+   "passed": true,
+   "rationale": "PASS: h = 1/(2pi) m (~15.92 cm), radius-independent; single-point variant noted separately. Correct."
+  },
+  {
+   "content_sha256": "5b18f209ca054aa345c28af6115de1b5f34424b6300c259e80b5bb682ac6da39",
+   "id": "hard-17",
+   "passed": true,
+   "rationale": "PASS: look-and-say correctly identified; explains why no closed form exists (Conway) rather than inventing one. Correct."
+  },
+  {
+   "content_sha256": "f9de5fd2d9dac24222b65c7d9a28ae36d6e6903f0549fefe2f73a7e2fa03691a",
+   "id": "hard-19",
+   "passed": true,
+   "rationale": "PASS: 1/3 with the six ordered outcomes enumerated. Correct."
+  },
+  {
+   "content_sha256": "67898c369d2f8968abc6b963e76cfc594b61095e62637d791a6b4f56a8645235",
+   "id": "hard-18",
+   "passed": true,
+   "rationale": "PASS: 4-subsquare pigeonhole proof with sqrt(2)/2 bound, sharpness example, and interior-point handling. Correct."
+  }
+ ],
+ "run_identity_sha256": "2c29ec6c48cdce06876e39c1e1789db26d8449935ed06e0316f3734a9d473dcd",
+ "schema": "r0b0tlab.qwen38.manual_evidence.v1"
+}

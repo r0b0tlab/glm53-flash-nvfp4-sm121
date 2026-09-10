@@ -1,0 +1,8 @@
+pass=0 case=hangul chars=18 U+FFFD=0 lock=None empty=False -> ok
+pass=0 case=mixed chars=32 U+FFFD=0 lock=None empty=False -> ok
+pass=0 case=toolish chars=0 U+FFFD=0 lock=None empty=True -> FAIL
+pass=0 case=longprose chars=0 U+FFFD=0 lock=None empty=True -> FAIL
+pass=0 case=code chars=0 U+FFFD=0 lock=None empty=True -> FAIL
+pass=0 case=math chars=356 U+FFFD=0 lock=None empty=False -> ok
+{"verdict": "FAIL", "bad_cases": 3}
+rc=1

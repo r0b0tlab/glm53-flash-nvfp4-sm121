@@ -1,0 +1,27 @@
+{
+ "verdict": "PASS",
+ "quant_algo": "NVFP4",
+ "producer": {
+  "name": "modelopt",
+  "version": "0.47.0.dev393+ga4bc45b30.d20260828"
+ },
+ "kv_cache_quant_algo": "FP8",
+ "n_index_keys": 147661,
+ "n_main_quant_weights": 36297,
+ "n_missing_companions": 0,
+ "missing_companions_sample": [],
+ "n_partial_companion_weights": 0,
+ "partial_sample": [],
+ "breakdown": {
+  "down_proj": 12099,
+  "gate_proj": 12099,
+  "up_proj": 12099
+ },
+ "n_mtp_keys": 889,
+ "n_mtp_scale_keys": 0,
+ "mtp_is_bf16": true,
+ "n_vision_keys": 347,
+ "n_vision_quantized": 0,
+ "n_dangling_shards": 0,
+ "dangling_sample": []
+}

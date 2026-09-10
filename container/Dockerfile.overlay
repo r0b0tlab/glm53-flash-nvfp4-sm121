@@ -1,0 +1,17 @@
+# GLM-5.3-Flash-NVFP4 SM121 overlay image.
+# Base pinned by digest (vLLM 0.28.1rc1.dev580+g385dce36b, flashinfer 0.6.18,
+# transformers 5.16.1, torch 2.13.0+cu130, arm64).
+FROM vllm/vllm-openai@sha256:b0501f99fec5136f248f78d5850977a2ec32d55cd9a665f4a9ffef24cbdf7fe5
+
+COPY patches/ /opt/glm53/patches/
+
+# P1 SM90 NoPE sparse MLA on SM121; P2 indexer persistent_topk SM-count gate;
+# P3 DFlash2 aux-capture glue; P4 GLM KV-group support for the DFlash2 drafter.
+RUN python3 /opt/glm53/patches/0001-sm90-nope-mla-sm121.py \
+ && python3 /opt/glm53/patches/0002-indexer-persistent-topk-sm121.py \
+ && python3 /opt/glm53/patches/0003-glm-dflash2-aux-capture.py \
+ && python3 /opt/glm53/patches/0004-glm-dflash2-drafter-group.py \
+ && python3 /opt/glm53/patches/verify_overlay.py
+
+LABEL org.r0b0tlab.glm53.overlay="sm121-p1p2p3p4" \
+      org.r0b0tlab.glm53.base="sha256:b0501f99fec5136f248f78d5850977a2ec32d55cd9a665f4a9ffef24cbdf7fe5"

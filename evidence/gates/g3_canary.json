@@ -1,0 +1,20 @@
+pass=0 case=hangul chars=519 U+FFFD=0 lock=None empty=False -> ok
+pass=0 case=mixed chars=1112 U+FFFD=0 lock=None empty=False -> ok
+pass=0 case=toolish chars=1562 U+FFFD=0 lock=None empty=False -> ok
+pass=0 case=longprose chars=2412 U+FFFD=0 lock=None empty=False -> ok
+pass=0 case=code chars=1744 U+FFFD=0 lock=None empty=False -> ok
+pass=0 case=math chars=887 U+FFFD=0 lock=None empty=False -> ok
+pass=1 case=hangul chars=349 U+FFFD=0 lock=None empty=False -> ok
+pass=1 case=mixed chars=933 U+FFFD=0 lock=None empty=False -> ok
+pass=1 case=toolish chars=2340 U+FFFD=0 lock=None empty=False -> ok
+pass=1 case=longprose chars=2374 U+FFFD=0 lock=None empty=False -> ok
+pass=1 case=code chars=1593 U+FFFD=0 lock=None empty=False -> ok
+pass=1 case=math chars=858 U+FFFD=0 lock=None empty=False -> ok
+pass=2 case=hangul chars=280 U+FFFD=0 lock=None empty=False -> ok
+pass=2 case=mixed chars=605 U+FFFD=0 lock=None empty=False -> ok
+pass=2 case=toolish chars=2342 U+FFFD=0 lock=None empty=False -> ok
+pass=2 case=longprose chars=2364 U+FFFD=0 lock=None empty=False -> ok
+pass=2 case=code chars=1906 U+FFFD=0 lock=None empty=False -> ok
+pass=2 case=math chars=898 U+FFFD=0 lock=None empty=False -> ok
+{"verdict": "PASS", "bad_cases": 0}
+rc=0

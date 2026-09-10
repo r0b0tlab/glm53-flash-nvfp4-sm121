@@ -1,0 +1,19 @@
+{
+  "status": "INCOMPLETE",
+  "rows": 180,
+  "correct_count": 113,
+  "incorrect_count": 5,
+  "ungraded_count": 23,
+  "grader_error_count": 39,
+  "e2e_tok_s": {
+    "n": 180,
+    "mean": 28.738616641014865,
+    "min": 5.5383163516681,
+    "max": 44.38159082862991,
+    "sum_completion_tokens": 228314,
+    "sum_elapsed_s": 9914.919,
+    "aggregate_completion_over_wall": 23.027319267297717
+  },
+  "campaign_wall_seconds": 7096.806167622002
+}
+Q200_RC=2

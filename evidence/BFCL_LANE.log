@@ -1,0 +1,23 @@
+=== BFCL hard20 start 2026-09-10T06:17:06+00:00 base=http://127.0.0.1:8000/v1 root=<home>/glm53-flash-nvfp4/evidence/bfcl-hard20/bfcl-run ===
+BFCL_RC=0
+  },
+  "selection_policy": {
+    "description": "Top 20 by frozen structural complexity; no candidate outputs or scores are inputs.",
+    "model_independent": true,
+    "sort_keys": [
+      "user_turn_count DESC",
+      "required_path_length DESC",
+      "involved_class_count DESC",
+      "numeric_case_id ASC"
+    ],
+    "take": 20
+  },
+  "status": "SCORED",
+  "timing": {
+    "error_count": 0,
+    "rows": 20,
+    "timing_sha256": "2a2b89ba40cc65a9e1fa7ec082409602daab23290b4891901bf1d19d1495dd39",
+    "unique_ids": 20
+  }
+}
+rc=0

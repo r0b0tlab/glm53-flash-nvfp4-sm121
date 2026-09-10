@@ -1,0 +1,2 @@
+code run 0: 512 tok / 15.6s = 32.80 tok/s
+code run 1: 512 tok / 14.4s = 35.47 tok/s

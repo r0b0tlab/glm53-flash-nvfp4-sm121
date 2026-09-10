@@ -1,0 +1,61 @@
+{
+  "schema": "r0b0tlab.glm53.metrics.v1",
+  "campaign": "GLM-5.3-Flash-NVFP4 (nvidia) on 2x GB10 SM121, TP=2, DFlash2 K=7",
+  "recorded_utc": "2026-09-10",
+  "runtime": {
+    "base_image": "vllm/vllm-openai@sha256:b0501f99fec5136f248f78d5850977a2ec32d55cd9a665f4a9ffef24cbdf7fe5",
+    "overlay_image": "glm53-flash-vllm-sm121:overlay-v2 sha256:3fceaf69a626569e6063bcaf63277e68b2b954aa099ecf2b5cb782943d446c17",
+    "vllm": "0.28.1rc1.dev580+g385dce36b",
+    "flashinfer": "0.6.18",
+    "transformers": "5.16.1",
+    "torch": "2.13.0+cu130",
+    "arch": "arm64 / SM121",
+    "attention_backend": "FLASHINFER_MLA_SPARSE_SM90 (P1)",
+    "moe_backend": "FLASHINFER_CUTLASS (native NVFP4)",
+    "kv_cache_dtype": "bfloat16",
+    "max_model_len": 126720,
+    "gpu_memory_utilization": 0.86,
+    "cudagraph_mode": "FULL_DECODE_ONLY",
+    "speculative": {"method": "dflash", "num_speculative_tokens": 7,
+                    "drafter": "incoai/GLM-5.3-Flash-DFlash2"},
+    "reasoning": "template always-on; reasoning_effort=max everywhere; deepseek_r1 parser"
+  },
+  "gates": {
+    "g0_static_audit": {"verdict": "PASS", "nvfp4_modules": 36297,
+                        "missing_companions": 0, "mtp_bf16": true,
+                        "vision_tensors_unquantized": 347},
+    "g1_boot": {"verdict": "PASS", "eagle3_taps": [6, 15, 25, 34, 43],
+                "dflash2_graphs": 4},
+    "g3_canary": {"verdict": "PASS", "cases": 18, "u_fffd": 0, "locks": 0},
+    "g7_text": {"verdict": "PASS", "passed": 5, "total": 5},
+    "g8_vision": {"verdict": "PASS", "passed": 8, "total": 8, "budget_tokens": 8192},
+    "deep_decode": {"verdict": "PASS", "prompt_tokens": 24207},
+    "niah": {"verdict": "PASS", "cases": 5, "depths": ["25%", "50%", "90%", "mk33", "mk66"],
+             "approx_prompt_tokens": 120100, "window": 126720},
+    "q200v2": {"verdict": "SCORED", "correct": 170, "total": 180,
+               "accuracy": 0.9444, "transported_accuracy": 0.9551,
+               "families": {"gsm8k": "78/80", "humaneval": "39/40",
+                            "ifeval": "35/40", "hard_reasoning": "18/20 (2 transport-excluded)"},
+               "e2e_tok_s_mean": 28.74},
+    "bfcl_hard20": {"verdict": "SCORED", "correct": 14, "total": 20, "accuracy": 0.7,
+                    "errors": 0},
+    "vision_bench": {"status": "IN_PROGRESS_AT_FREEZE",
+                     "note": "r0b0bench-vision-glm53max bounded subsets (300/suite); see vision-bench/",
+                     "budget_tokens": {"cvbench": 1024, "mmvp": 1024,
+                                       "realworldqa": 1024, "ocrbench": 2048}}
+  },
+  "perf": {
+    "c1_code_tok_s": {"ar": 15.1, "dflash2": 34.0, "speedup": 2.25},
+    "c1_prose_tok_s": {"ar": 14.87, "dflash2": 25.0},
+    "c1_math_reasoning_tok_s": 46.28,
+    "spec_acceptance": {"pooled": 0.393, "first_slot": 0.784, "mean_accepted_len": 2.75},
+    "spec_lossless": "INDETERMINATE (same-serve temp-0 nondeterminism; not drafter decay)"
+  },
+  "boundaries": [
+    "bf16 KV is the maximum: fp8 canonicalizes to a packed uint8 layout the SM90 sparse-MLA backend rejects",
+    "window 126,720 is KV-pool bound (kv_cache_max_concurrency ~1.36x)",
+    "thinking cannot be disabled (template always opens <think>)",
+    "reasoning is returned in the `reasoning` field",
+    "identical-size multi-image batch ordering can be nondeterministic"
+  ]
+}

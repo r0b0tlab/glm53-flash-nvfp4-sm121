@@ -1,0 +1,28 @@
+{
+  "recorded": "2026-09-09",
+  "upstream": {
+    "vllm_latest_release": "v0.29.0 (published 2026-09-09T08:54:49Z; tag target main)",
+    "glm5next_model_support": "PR #53906 merged; vllm/models/glm5next/ present on main; v0.29.0+ per recipe",
+    "dflash2": "PR #52816 MERGED 2026-08-21 (merge b389ac29465b33f9e9c534df221ea3c129e9793f); qwen3_dflash2.py + v1/worker/gpu/spec_decode/dflash2/speculator.py + DFlash2DraftModel registry",
+    "nope_sm120_shim_pr_53969": {
+      "state": "OPEN (not merged)",
+      "files_changed": 2, "additions": 69, "deletions": 7,
+      "mechanism": "Python-only zero-pad of the rope lane on both KV-write and query side; avoids the compiled concat_and_cache_mla pe_dim==64 assert; bit-exact for NoPE; validates effective topk width (index_topk 2044 + kpool 4 -> 2047 -> padded 2048)",
+      "proven": "2x DGX Spark GB10 TP=2, GLM-5.3-Flash-NVFP4, fp8_ds_mla, 384k ctx, MTP k=5, Marlin NVFP4, 21.0 tok/s decode, ~76% first-position acceptance"
+    },
+    "nope_sm120_native_pr_55277": {
+      "state": "OPEN (not merged)",
+      "mechanism": "native pe_dim=0 in csrc/libtorch_stable/cache_kernels.cu + kpool page-table width fix; needs FlashInfer GLM53_NOPE (flashinfer#4947) and a C++ rebuild",
+      "verdict": "optional optimization (~11% QK-dims MMA saved); NOT required for bring-up"
+    },
+    "moe_input_scale_issue_54189": "CLOSED/completed 2026-08-30 (weight-only checkpoints zeroed MoE; nvidia checkpoint has input_scale tensors - audit confirms)",
+    "corruption_issue_54150": "OPEN. ModelOpt NVFP4 checkpoints (LibertAIDAI, dealignai) emitted U+FFFD on SM120/121; RedHatAI compressed-tensors clean. NVIDIA official checkpoint is ModelOpt -> hard canary required",
+    "spec_method_name": "dflash (not dflash2); num_speculative_tokens = block_size - 1 = 7",
+    "drafter": "incoai/GLM-5.3-Flash-DFlash2; text-only drafting ('does not support external multimodal embeddings') but vision requests still work, just not speculated",
+    "swap_requirement": "DFlash2 on 121GB TP2 nodes: swap ON + vm.swappiness=0 (swap off -> killed during MoE marlin repack; default swappiness -> UVM livelock)"
+  },
+  "decisions_taken_this_session": {
+    "base_strategy": "layered image FROM the official vllm/vllm-openai:glm53-flash-arm64-cu130 digest + Python-only SM121/DFlash2 overlay; source build only if the base lacks glm5next or DFlash2",
+    "patches_required": ["NoPE zero-pad shim (#53969 port)", "persistent_topk SM-count gate (own)", "GLM aux-capture SupportsEagle3 + mHC contraction (own port)", "GLM drafter KV group slot-share (own port)", "NVFP4 MoE input_scale + MTP-layer-45 quant resolution check"]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "recorded": "2026-09-09",
+  "confirmed_by_user": {
+    "topology": "node3 (RANK0) + node2 (RANK1); ling30vl-mp serve stopped on node2",
+    "spec_decode": "DFlash2 primary lane; native MTP as measured baseline only",
+    "checkpoint": "nvidia/GLM-5.3-Flash-NVFP4 (official NVIDIA NVFP4, ungated, sha 423acf375837)",
+    "multimodality": "HARD requirement: image + video retained on the FINAL DFlash2 image"
+  },
+  "actions": {
+    "ling_serve": "docker stop ling30vl-mp on node2 (user-approved); container auto-removed (--rm); image ling30vl-vllm-sm121:e2e5751 retained; 114 GiB free after",
+    "fabric": "roceP2p1s0f0 -> enP2p1s0f0np0 (200GbE VLAN200 192.168.101.x) on both ranks; rocep1s0f0 -> enp1s0f0np0 (192.168.100.x) also up"
+  }
+}

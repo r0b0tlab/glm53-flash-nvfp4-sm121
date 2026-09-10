@@ -1,0 +1,24 @@
+== canary (3 passes) ==
+{"verdict": "PASS", "bad_cases": 0}
+== acceptance matrix (512 tok) ==
+{"case": "code", "tok": 512, "wall_s": 15.1, "tok_s": 33.96, "pooled_accept": null, "mean_accepted_len": null, "per_pos_accept": {"0": null, "1": null, "2": null, "3": null, "4": null, "5": null, "6": null}}
+{"case": "prose", "tok": 512, "wall_s": 20.4, "tok_s": 25.04, "pooled_accept": null, "mean_accepted_len": null, "per_pos_accept": {"0": null, "1": null, "2": null, "3": null, "4": null, "5": null, "6": null}}
+{"case": "reasoning", "tok": 512, "wall_s": 11.1, "tok_s": 46.28, "pooled_accept": null, "mean_accepted_len": null, "per_pos_accept": {"0": null, "1": null, "2": null, "3": null, "4": null, "5": null, "6": null}}
+{"summary": [{"case": "code", "tok": 512, "wall_s": 15.1, "tok_s": 33.96, "pooled_accept": null, "mean_accepted_len": null, "per_pos_accept": {"0": null, "1": null, "2": null, "3": null, "4": null, "5": null, "6": null}}, {"case": "prose", "tok": 512, "wall_s": 20.4, "tok_s": 25.04, "pooled_accept": null, "mean_accepted_len": null, "per_pos_accept": {"0": null, "1": null, "2": null, "3": null, "4": null, "5": null, "6": null}}, {"case": "reasoning", "tok": 512, "wall_s": 11.1, "tok_s": 46.28, "pooled_accept": null, "mean_accepted_len": null, "per_pos_accept": {"0": null, "1": null, "2": null, "3": null, "4": null, "5": null, "6": null}}]}
+== lossless record (dflash2) ==
+[dflash2] 5: 193 chars
+RECORDED <home>/glm53-flash-nvfp4/evidence/spec/dflash2.json
+== lossless compare (ar vs dflash2) ==
+ "mismatched_prompts": [
+  0,
+  1,
+  4,
+  5
+ ],
+ "n": 6
+}
+== perf: code prompt, 2x512 ==
+code run 0: 512 tok / 15.6s = 32.80 tok/s
+code run 1: 512 tok / 14.4s = 35.47 tok/s
+POST_BOOT_GATES_DONE final
+rc=0
