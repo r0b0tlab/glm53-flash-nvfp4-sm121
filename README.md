@@ -7,9 +7,12 @@ DGX Spark / GB10 nodes at tensor-parallel 2, with the
 [`incoai/GLM-5.3-Flash-DFlash2`](https://huggingface.co/incoai/GLM-5.3-Flash-DFlash2)
 block-diffusion drafter, thinking at `reasoning_effort=max` throughout.
 
-- **Runtime image:** `ghcr.io/r0b0tlab/glm53-flash-nvfp4-sm121:<tag>` — layered over
+- **Runtime image:** `ghcr.io/r0b0tlab/glm53-flash-nvfp4-sm121:overlay-v2` — layered over
   `vllm/vllm-openai@sha256:b0501f99…` (vLLM 0.28.1rc1.dev580, FlashInfer 0.6.18,
   transformers 5.16.1, torch 2.13.0+cu130, arm64) with four anchored SM121/GLM patches.
+  (Pushed digest `sha256:b9edc8e0…`; **package visibility flip to public is a one-click
+  UI action** at the package settings page — the repository CI's anonymous-pull gate
+  goes green once flipped.)
 - **Patches** (`patches/`, each idempotent, fail-closed on anchor drift):
   1. `0001-sm90-nope-mla-sm121.py` — enable the SM90 NoPE sparse-MLA backend on
      capability 12 (the stock SM120 path requires the packed `fp8_ds_mla` layout the
