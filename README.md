@@ -82,6 +82,13 @@ bash serve/boot_dflash2.sh         # TP=2 + DFlash2 K=7 (host/fabric values come
 `config.env.example` documents every variable, and a single-node image build works
 without it.
 
+The Q200v2 quality lane (`scripts/q200_only.sh`, `scripts/quality_campaign.sh`) runs the
+frozen kit published in [`r0b0tlab/r0b0bench`](https://github.com/r0b0tlab/r0b0bench/tree/main/subsets/q200v2)
+— dataset `quality-text-180-v2.jsonl` sha256
+`74623ab9b075120cd6f7a93059cc16d8817a6039dd20118b8f0350279f8b1ed6` — plus the BFCL v4
+`multi_turn_base` structural-hard20 selection. Point `Q200V2_RUNNER` at your local checkout of
+that kit.
+
 ## Run the published image
 
 The overlay image is public on GHCR and CI pulls it anonymously on every run:
