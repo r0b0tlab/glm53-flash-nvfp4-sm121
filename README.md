@@ -72,9 +72,15 @@ block-diffusion drafter, thinking at `reasoning_effort=max` throughout.
 ## Reproduce
 
 ```
-bash container/build.sh            # pull pinned base, apply patches, verify, distribute
-bash serve/boot_dflash2.sh         # TP=2 + DFlash2 K=7 (see config.env for the fabric)
+cp config.env.example config.env   # optional — only needed for multi-node serve/distribute
+bash container/build.sh            # pinned base + anchored patches + in-image verify;
+                                   # distributes to both ranks only when RANK0/RANK1 are set
+bash serve/boot_dflash2.sh         # TP=2 + DFlash2 K=7 (host/fabric values come from config.env)
 ```
+
+`config.env` is intentionally not committed (node and fabric specifics live there);
+`config.env.example` documents every variable, and a single-node image build works
+without it.
 
 Attribution: NVIDIA (model + base image), vLLM, FlashInfer, and the public SM121 GLM
 work this campaign verified and credits — `tonyd2wild/GLM-5.3-Flash-NVFP4-DFlash2-2x-DGX-Spark`

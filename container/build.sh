@@ -4,13 +4,22 @@
 #   bash container/build.sh [--push] [--tag TAG]
 #
 # Pulls the pinned base by digest, applies the anchored overlay patches in-build
-# (each fails closed on anchor drift), verifies the result, then distributes the
-# image to both ranks and asserts identical image IDs.
+# (each fails closed on anchor drift), verifies the result, then — when RANK0/RANK1
+# are configured — distributes the image to both ranks and asserts identical image IDs.
 set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "${HERE}/.." && pwd)"
-# shellcheck disable=SC1091
-source "${ROOT}/config.env"
+# config.env carries node/fabric specifics and is intentionally not committed
+# (see config.env.example). Without it the image is still built and verified
+# locally; distribution to the two ranks is skipped.
+if [[ -f "${ROOT}/config.env" ]]; then
+  # shellcheck disable=SC1091
+  source "${ROOT}/config.env"
+else
+  echo "note: ${ROOT}/config.env not found — building locally only (copy config.env.example to enable distribution)" >&2
+fi
+RANK0="${RANK0:-}"
+RANK1="${RANK1:-}"
 
 BASE_DIGEST="sha256:b0501f99fec5136f248f78d5850977a2ec32d55cd9a665f4a9ffef24cbdf7fe5"
 BASE="vllm/vllm-openai@${BASE_DIGEST}"
@@ -34,14 +43,18 @@ docker build -f "${ROOT}/container/Dockerfile.overlay" -t "${TAG}" "${ROOT}"
 echo "== in-image verify =="
 docker run --rm --entrypoint python3 "${TAG}" /opt/glm53/patches/verify_overlay.py
 
-echo "== distribute to ranks =="
-ID0="$(ssh -o BatchMode=yes "${RANK0}" "docker image inspect '${TAG}' --format '{{.Id}}'")"
-if ! ssh -o BatchMode=yes "${RANK1}" "docker image inspect '${TAG}' --format '{{.Id}}'" 2>/dev/null | grep -q "${ID0#sha256:}"; then
-  docker save "${TAG}" | ssh -o BatchMode=yes "${RANK1}" docker load
+if [[ -n "${RANK0}" && -n "${RANK1}" ]]; then
+  echo "== distribute to ranks =="
+  ID0="$(ssh -o BatchMode=yes "${RANK0}" "docker image inspect '${TAG}' --format '{{.Id}}'")"
+  if ! ssh -o BatchMode=yes "${RANK1}" "docker image inspect '${TAG}' --format '{{.Id}}'" 2>/dev/null | grep -q "${ID0#sha256:}"; then
+    docker save "${TAG}" | ssh -o BatchMode=yes "${RANK1}" docker load
+  fi
+  ID1="$(ssh -o BatchMode=yes "${RANK1}" "docker image inspect '${TAG}' --format '{{.Id}}'")"
+  [[ "${ID0}" == "${ID1}" ]] || { echo "image parity FAIL: ${ID0} != ${ID1}" >&2; exit 1; }
+  echo "image parity OK: ${ID0}"
+else
+  echo "== distribute skipped (RANK0/RANK1 unset — see config.env.example) =="
 fi
-ID1="$(ssh -o BatchMode=yes "${RANK1}" "docker image inspect '${TAG}' --format '{{.Id}}'")"
-[[ "${ID0}" == "${ID1}" ]] || { echo "image parity FAIL: ${ID0} != ${ID1}" >&2; exit 1; }
-echo "image parity OK: ${ID0}"
 
 if [[ "${PUSH}" == "1" ]]; then
   echo "== push to GHCR =="

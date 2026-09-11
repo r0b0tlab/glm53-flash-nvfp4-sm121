@@ -4,8 +4,14 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 ROOT="$PWD"
-# shellcheck disable=SC1091
-source config.env
+# config.env carries node/fabric specifics and is not committed (see config.env.example).
+if [[ -f config.env ]]; then
+  # shellcheck disable=SC1091
+  source config.env
+fi
+for v in RANK0 RANK1; do
+  [[ -n "${!v:-}" ]] || { echo "error: $v is unset — set it in config.env (see config.env.example)" >&2; exit 2; }
+done
 
 echo "== sync evidence from node3 =="
 ssh -o BatchMode=yes "$RANK0" 'tar -C ~/glm53-flash-nvfp4/evidence -cf - . 2>/dev/null' | tar -C evidence -xf - 2>/dev/null || true

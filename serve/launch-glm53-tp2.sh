@@ -4,8 +4,14 @@
 # Usage: [ENV=...] bash serve/launch-glm53-tp2.sh          (SG_DRYRUN=1 to preview)
 set -euo pipefail
 _HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck disable=SC1091
-source "${_HERE}/../config.env"
+# config.env carries node/fabric specifics and is not committed (see config.env.example).
+if [[ -f "${_HERE}/../config.env" ]]; then
+  # shellcheck disable=SC1091
+  source "${_HERE}/../config.env"
+fi
+for v in RANK0 RANK1 RANK0_FABRIC RANK1_FABRIC RANK0_HCA RANK1_HCA MODEL_DIR SPEC_MODEL_DIR MASTER_PORT API_PORT; do
+  [[ -n "${!v:-}" ]] || { echo "error: $v is unset — set it in config.env (see config.env.example)" >&2; exit 2; }
+done
 
 IMAGE="${IMAGE:?set IMAGE}"
 NAME="${NAME:-glm53_vllm}"

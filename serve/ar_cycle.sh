@@ -3,8 +3,14 @@
 # spec-decode losslessness reference + AR baseline perf.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-# shellcheck disable=SC1091
-source config.env
+# config.env carries node/fabric specifics and is not committed (see config.env.example).
+if [[ -f config.env ]]; then
+  # shellcheck disable=SC1091
+  source config.env
+fi
+for v in RANK0 RANK1; do
+  [[ -n "${!v:-}" ]] || { echo "error: $v is unset — set it in config.env (see config.env.example)" >&2; exit 2; }
+done
 pkill -f "[b]oot_when_ready.sh" 2>/dev/null || true
 for H in "$RANK0" "$RANK1"; do
   ssh -o BatchMode=yes "$H" 'docker rm -f glm53_vllm 2>/dev/null || true'

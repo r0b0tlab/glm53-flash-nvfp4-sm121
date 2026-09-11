@@ -3,7 +3,14 @@
 # and block until /health. Run on the head, in tmux.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-source config.env
+# config.env carries node/fabric specifics and is not committed (see config.env.example).
+if [[ -f config.env ]]; then
+  # shellcheck disable=SC1091
+  source config.env
+fi
+for v in RANK0 RANK1; do
+  [[ -n "${!v:-}" ]] || { echo "error: $v is unset — set it in config.env (see config.env.example)" >&2; exit 2; }
+done
 
 echo "== waiting for node2 model copy (33 shards) =="
 until ssh -o BatchMode=yes "$RANK1" 'ls ~/models/nvidia/GLM-5.3-Flash-NVFP4/*.safetensors 2>/dev/null | wc -l' | grep -q '^33$'; do
