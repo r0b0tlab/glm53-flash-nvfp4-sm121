@@ -16,6 +16,8 @@ jobs:
         run: |
           for f in scripts/*.py patches/*.py; do python3 -m py_compile "$f"; done
           for f in container/build.sh serve/*.sh scripts/*.sh; do bash -n "$f"; done
+      - name: ShellCheck (warnings and above)
+        run: shellcheck -S warning container/*.sh serve/*.sh scripts/*.sh
       - name: build.sh works without config.env (regression guard)
         run: bash scripts/test_no_config_env.sh
       - name: Patch anchors still apply (dry-run against the pinned base tree)

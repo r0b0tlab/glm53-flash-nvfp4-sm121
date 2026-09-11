@@ -7,9 +7,7 @@ if [[ -f config.env ]]; then
   # shellcheck disable=SC1091
   source config.env
 fi
-for v in RANK0; do
-  [[ -n "${!v:-}" ]] || { echo "error: $v is unset — set it in config.env (see config.env.example)" >&2; exit 2; }
-done
+[[ -n "${RANK0:-}" ]] || { echo "error: RANK0 is unset — set it in config.env (see config.env.example)" >&2; exit 2; }
 bash serve/boot_dflash2.sh
 echo "== waiting for /health =="
 until ssh -o BatchMode=yes "$RANK0" 'curl -sf http://127.0.0.1:8000/health >/dev/null 2>&1'; do sleep 30; done

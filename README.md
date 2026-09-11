@@ -82,6 +82,43 @@ bash serve/boot_dflash2.sh         # TP=2 + DFlash2 K=7 (host/fabric values come
 `config.env.example` documents every variable, and a single-node image build works
 without it.
 
+## Run the published image
+
+The overlay image is public on GHCR and CI pulls it anonymously on every run:
+
+```
+docker pull ghcr.io/r0b0tlab/glm53-flash-nvfp4-sm121:overlay-v2
+```
+
+To bring up the two-rank serve, fill in `config.env` (see `config.env.example`), make
+sure the image is present on both ranks (`docker pull`, or `bash container/build.sh`
+builds and distributes it with an image-ID parity check), then:
+
+```
+bash serve/boot_dflash2.sh        # DFlash2 K=7 profile; TP=2, window 126,720
+SG_DRYRUN=1 bash serve/launch-glm53-tp2.sh   # print the exact docker run commands first
+```
+
+The launcher mounts the model tree read-only at `/model`, the drafter at `/drafter` for the
+DFlash2 profile, each rank's JIT caches (`~/.cache/{triton,vllm,flashinfer}`), and passes the
+per-rank `NCCL_IB_HCA` / `NCCL_SOCKET_IFNAME` values from `config.env`. Rank 1 starts first
+(headless); rank 0 binds the API on `API_PORT`.
+
+## What's in this repo
+
+| Path | Contents |
+|---|---|
+| `container/` | `Dockerfile.overlay` + `build.sh` — pinned base by digest, anchored patches applied in-build, in-image verify, optional rank distribution with ID parity |
+| `patches/` | the SM121 patches (SM90 NoPE sparse-MLA on SM121, indexer `persistent_topk` SM-count gate, DFlash2 aux-capture glue, drafter KV group, SM120 NoPE pad) + `verify_overlay.py` |
+| `serve/` | TP=2 launchers and profiles: `boot_dflash2.sh` (primary), `boot_v2.sh`, `ar_cycle.sh`, `boot_when_ready.sh`, `boot_and_q200.sh`, `launch-glm53-tp2.sh` |
+| `scripts/` | gate harness — canary, acceptance matrix, lossless record/compare, NIAH, Q200v2/BFCL lanes, evidence packager, `test_no_config_env.sh` |
+| `evidence/` | sanitized results with `MANIFEST.sha256`, verified by CI |
+| `model-card/` | the model/recipe card source |
+
+Contributions are welcome as issues; the CI job (`validate`) runs the evidence manifest
+check, script syntax + ShellCheck, the no-`config.env` regression guard, the private-residue
+scan and the anonymous image pull.
+
 Attribution: NVIDIA (model + base image), vLLM, FlashInfer, and the public SM121 GLM
 work this campaign verified and credits — `tonyd2wild/GLM-5.3-Flash-NVFP4-DFlash2-2x-DGX-Spark`
 (NoPE-on-SM121 route, DFlash2 glue, persistent_topk forensics), LibertAI

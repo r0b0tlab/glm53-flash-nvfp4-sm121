@@ -2,7 +2,7 @@
 # Post-boot gate bundle for the DFlash2 serve (run on rank0).
 # canary -> acceptance matrix -> lossless record/compare -> benches.
 set -uo pipefail
-cd ~/glm53-flash-nvfp4
+cd ~/glm53-flash-nvfp4 || exit 1
 TS="${TS:-$(date -u +%Y%m%dT%H%M%SZ)}"
 OUT="evidence/gates/$TS"
 mkdir -p "$OUT"

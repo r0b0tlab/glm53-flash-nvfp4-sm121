@@ -2,7 +2,7 @@
 # Quality campaign on the live DFlash2 serve (run ON rank0/node3).
 # Order: canary -> text gates -> Q200v2 text180 -> NIAH core ladder.
 set -uo pipefail
-cd ~/glm53-flash-nvfp4
+cd ~/glm53-flash-nvfp4 || exit 1
 TS="${TS:-$(date -u +%Y%m%dT%H%M%SZ)}"
 OUT="evidence/campaign/$TS"
 mkdir -p "$OUT"
@@ -21,7 +21,7 @@ GLM53_BASE=http://127.0.0.1:8000/v1/chat/completions GLM53_MODEL=glm-5.3-flash-n
 tail -1 "$OUT/text_gates.txt" | tee -a "$OUT/README.txt"
 
 echo "== Q200v2 text180 (workers=2, max_tokens=8192, effort=max) =="
-( cd "$OUT"
+( cd "$OUT" || exit 1
   Q200V2_RUNNER="$HOME/qwen38-flash-next-w4a16/q200v2ar-20260829T141533Z-runner" \
   python3 "$HOME/glm53-flash-nvfp4/scripts/run_q200v2_glm53.py" \
     --base-url http://127.0.0.1:8000 \
